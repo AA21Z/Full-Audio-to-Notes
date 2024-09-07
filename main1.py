@@ -7,8 +7,9 @@ import whisper
 working_directory = os.getcwd()
 
 # Initialize the relative path to the sample audio file
-audio_loc = "/Input Audio/AR_Sample.m4a"
+audio_loc = os.path.join("Input Audio", "AR_Sample.m4a")
 full_audio_path = os.path.join(working_directory, audio_loc)
+print(full_audio_path)
 
 # Prompt the user to decide whether to run the sample file or their own file
 run_sample_input = input("Would you like to run the sample file? Yes or No: ").strip().lower()
@@ -28,7 +29,7 @@ def transcribe_audio_whisper(source_file):
 
 output_text = transcribe_audio_whisper(full_audio_path)
 
-print(output_text)
+print("Output Transcript: \n",output_text)
 
 # -- Older OpenAI code [Requires API key] -- 
 #client = OpenAI()

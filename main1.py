@@ -17,19 +17,25 @@ run_sample_input = input("Would you like to run the sample file? Yes or No: ").s
 # Determine the file path based on user input
 if run_sample_input == "no":
   full_audio_path = input("Please provide full audio path/location: ")
+  if not os.path.isfile(full_audio_path):  # Check if the provided path is valid
+        print("Provided file path is invalid. Please try again.")
+        exit(1)
 else:
   # if statement does not take into account any other inputs #TODO: AA Revist logic.
   print("Running sample file now.")
 
 def transcribe_audio_whisper(source_file): 
-  model = whisper.load_model("base")
-  result = model.transcribe(source_file)
-  return result["text"]
-
+  try:
+      model = whisper.load_model("small")
+      result = model.transcribe(source_file)
+      return result["text"]
+  except Exception as e:
+      print(f"An error occurred during transcription: {e}")
+      return None
 
 output_text = transcribe_audio_whisper(full_audio_path)
 
-print("Output Transcript: \n",output_text)
+print("Your output Transcript: \n", "\"",output_text, "\"")
 
 # -- Older OpenAI code [Requires API key] -- 
 #client = OpenAI()

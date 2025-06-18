@@ -1,6 +1,11 @@
 import os
 #from openai import OpenAI
 import whisper
+import torch
+
+# Check if GPU acceleration via Metal is available
+device = "mps" if torch.backends.mps.is_available() else "cpu"
+print(f"Using device: {device}")
 
 # Init full path instances TODO: AA to improve so only name of file is needed.
 # Get the current working directory
@@ -26,7 +31,7 @@ else:
 
 def transcribe_audio_whisper(source_file): 
   try:
-      model = whisper.load_model("small")
+      model = whisper.load_model("medium", device="cpu")  # Use CPU explicitly
       result = model.transcribe(source_file)
       return result["text"]
   except Exception as e:
@@ -35,7 +40,20 @@ def transcribe_audio_whisper(source_file):
 
 output_text = transcribe_audio_whisper(full_audio_path)
 
-print("Your output Transcript: \n", "\"",output_text, "\"")
+#print("Your output Transcript: \n", "\"",output_text, "\"")
+
+if output_text:
+  # Define the output directory and ensure it exists
+  output_dir = os.path.join(working_directory, "outputs")
+  os.makedirs(output_dir, exist_ok=True) 
+  # Generate a filename based on the audio file name
+  audio_filename = os.path.basename(full_audio_path)
+  transcript_filename = os.path.splitext(audio_filename)[0] + "_transcript.txt"
+  transcript_path = os.path.join(output_dir, transcript_filename)  
+  # Write the transcript to a .txt file
+  with open(transcript_path, "w", encoding="utf-8") as file:
+    file.write(output_text)  
+  print(f"Transcript saved to: {transcript_path}")
 
 # -- Older OpenAI code [Requires API key] -- 
 #client = OpenAI()

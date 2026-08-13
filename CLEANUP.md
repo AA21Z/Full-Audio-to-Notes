@@ -23,8 +23,6 @@ change that completes an item so the tracker remains useful over time.
   safe environment templates.
 - [x] Verify representative sensitive paths with `git check-ignore`.
 
-## Remaining work
-
 ### 2. Consolidate the supported application
 
 Goal: leave one clear, maintainable way to run the project.
@@ -36,12 +34,19 @@ Goal: leave one clear, maintainable way to run the project.
   unsupported.
 - [x] Verify the Tkinter application with synthetic audio while confirming the
   event loop remains responsive and generated data stays untracked.
-- [ ] Record the separate PocketSphinx keyword experiment and its decision-gate
+- [x] Record the separate PocketSphinx keyword experiment and its decision-gate
   result.
 - [x] Confirm the branch contains only changes intended to reach `main`.
 
 Done when a new contributor can identify the supported application without
 having to inspect every Python file and the PocketSphinx evaluation is recorded.
+
+Completed on 2026-08-13. The isolated PocketSphinx evaluation passed its narrow
+synthetic gate (two detections across three positive utterances and none on the
+negative control), but vocabulary-prompted Whisper transcribed all three. Keep
+PocketSphinx experimental; do not integrate it into the supported application.
+
+## Remaining work
 
 ### 3. Replace the hard-coded script with a proper CLI
 

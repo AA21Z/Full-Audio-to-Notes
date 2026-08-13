@@ -119,8 +119,11 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
+# Environments and local configuration
 .env
+.env.*
+!.env.example
+!.env.template
 .venv
 env/
 venv/
@@ -159,5 +162,62 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .DS_Store
-/Input Audio
-/outputs
+
+# Private source media (never commit real recordings)
+/Input Audio/
+/input-audio/
+/recordings/
+*.aac
+*.aif
+*.aiff
+*.amr
+*.flac
+*.m4a
+*.mp3
+*.mp4
+*.mkv
+*.mov
+*.ogg
+*.opus
+*.wav
+*.webm
+*.wma
+
+# Generated transcripts and notes (may contain PII or health information)
+/outputs/
+/transcripts/
+*_transcript.*
+*.srt
+*.vtt
+
+# Local-only sensitive datasets
+/private-data/
+/sensitive-data/
+/patient-data/
+/health-data/
+
+# Runtime logs and databases
+/logs/
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-shm
+*.sqlite3-wal
+
+# Credentials and private keys
+/.secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+*.ppk
+credentials*.json
+client_secret*.json
+service-account*.json
